@@ -1,0 +1,38 @@
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Ajusta este valor según tus necesidades */
+}
+
+.form-label {
+    width: 150px; /* Ajusta este valor según el espacio que necesites */
+    margin-right: 5px; /* Reduce este valor para disminuir la separación */
+}
+
+.form-input {
+    flex: 1;
+}
+
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+}
+
+.submit-btn {
+    background-color: #326fb1;
+    color: #000;
+}
+
+.submit-btn:hover {
+    background-color: #1a3e64;
+    color: #fff; /* Cambia el color del texto al blanco */
+}
