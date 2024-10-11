@@ -11,6 +11,9 @@ export default defineConfig({
                 'resources/css/login.css',
                 'resources/css/register.css',
                 'resources/css/dashboard.css',
+                'resources/css/index.css',
+                'resources/css/create-computer.css',
+                'resources/css/edit-computer.css'
             ],
             refresh: true,
         }),

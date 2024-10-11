@@ -36,12 +36,12 @@
             </label>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
             <button type="submit" class="btn submit-btn">
                 {{ __('Iniciar Sesión') }}
             </button>
             @if (Route::has('password.request'))
-                <a class="btn btn-link" href="{{ route('password.request') }}">
+                <a class="btn-link" href="{{ route('password.request') }}">
                     {{ __('Olvidaste tu Contraseña?') }}
                 </a>
             @endif

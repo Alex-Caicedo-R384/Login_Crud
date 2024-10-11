@@ -17,15 +17,6 @@
             @endif
 
             <p>{{ __('You are logged in!') }}</p>
-
-            <!-- Botón para eliminar el usuario -->
-            <form method="POST" action="{{ route('user.destroy', Auth::user()->id) }}" onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn submit-btn">
-                    {{ __('Eliminar Cuenta') }}
-                </button>
-            </form>
         </section>
     </article>
 </section>
