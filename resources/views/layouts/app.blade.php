@@ -41,7 +41,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -84,6 +83,19 @@
         </nav>
 
         <main class="py-4">
+            {{-- Mensajes de sesión --}}
+            @if(session('success'))
+                <div class="alert alert-success" style="margin-bottom: 15px;">
+                    {{ session('success') }}
+                </div>
+            @endif
+            
+            @if(session('error'))
+                <div class="alert alert-danger" style="margin-bottom: 15px;">
+                    {{ session('error') }}
+                </div>
+            @endif
+            
             @yield('content')
         </main>
     </div>

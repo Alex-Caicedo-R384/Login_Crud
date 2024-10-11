@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Computer; // Asegúrate de que esta línea esté presente
+use App\Models\Computer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
