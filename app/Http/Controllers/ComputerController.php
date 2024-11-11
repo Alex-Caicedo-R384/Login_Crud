@@ -16,43 +16,62 @@ class ComputerController extends Controller
 
     public function create()
     {
-        return view('computers.create');
+        $procesadores = Processor::all();
+        $gpus = Gpu::all();
+
+        return view('computers.create', compact('procesadores', 'gpus'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'procesador' => 'required|string|max:255',
-            'modulos_ram' => 'required|integer',
-            'capacidad_ram' => 'required|integer',
-            'gpu' => 'required|string|max:255',
+        $validated = $request->validate([
+            'procesador' => 'required',
+            'gpu' => 'required',
+            'user_id' => 'required|exists:users,id',
         ]);
 
-        Computer::create($request->all());
-        return redirect()->route('computers.index')->with('success', 'Computadora creada exitosamente.');
+        $computer = Computer::create($validated);
+
+        return redirect()->route('computers.index')->with('success', 'Computadora creada exitosamente');
     }
 
     public function edit(Computer $computer)
     {
-        return view('computers.edit', compact('computer'));
+        $procesadores = Processor::all();
+        $gpus = Gpu::all();
+
+        if ($computer->user_id !== auth()->user()->id) {
+            return redirect()->route('computers.index');
+        }
+
+        return view('computers.edit', compact('computer', 'procesadores', 'gpus'));
     }
 
     public function update(Request $request, Computer $computer)
     {
-        $request->validate([
-            'procesador' => 'required|string|max:255',
-            'modulos_ram' => 'required|integer',
-            'capacidad_ram' => 'required|integer',
-            'gpu' => 'required|string|max:255',
+        if ($computer->user_id !== auth()->user()->id) {
+            return redirect()->route('computers.index');
+        }
+
+        $validated = $request->validate([
+            'procesador' => 'required',
+            'gpu' => 'required',
+            'user_id' => 'required|exists:users,id',
         ]);
 
-        $computer->update($request->all());
-        return redirect()->route('computers.index')->with('success', 'Computadora actualizada exitosamente.');
+        $computer->update($validated);
+
+        return redirect()->route('computers.index')->with('success', 'Computadora actualizada exitosamente');
     }
 
     public function destroy(Computer $computer)
     {
+        if ($computer->user_id !== auth()->user()->id) {
+            return redirect()->route('computers.index');
+        }
+
         $computer->delete();
-        return redirect()->route('computers.index')->with('success', 'Computadora eliminada exitosamente.');
+
+        return redirect()->route('computers.index')->with('success', 'Computadora eliminada exitosamente');
     }
 }

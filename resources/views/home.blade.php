@@ -6,7 +6,7 @@
 
 @section('content')
 <section class="container">
-    <header class="card-header">{{ __('Dashboard') }}</header>
+    <header class="card-header">{{ __('Inicio') }}</header>
 
     <article class="card">
         <section class="card-body">
@@ -16,7 +16,13 @@
                 </article>
             @endif
 
-            <p>{{ __('You are logged in!') }}</p>
+            @if (Auth::user()->is_admin)
+                <p>{{ __('Eres administrador') }}</p>
+            @else
+                <p>{{ __('No eres administrador') }}</p>
+            @endif
+
+            <a href="{{ route('computers.index') }}" class="btn">{{ __('Index Computadoras') }}</a>
         </section>
     </article>
 </section>

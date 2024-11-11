@@ -4,34 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     
-    <!-- Scripts and CSS -->
-    @vite(['resources/sass/app.scss', 
-    'resources/js/app.js', 
-    'resources/css/login.css', 
-    'resources/css/register.css', 
-    'resources/css/dashboard.css',
-    'resources/css/index.css',
-    'resources/css/create-computer.css',
-    'resources/css/edit-computer.css']) <!-- Incluir aquí más css-->
-    
-    <!-- Bootstrap CSS (comentado) -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    @vite([
+        'resources/sass/app.scss', 
+        'resources/js/app.js', 
+        'resources/css/login.css', 
+        'resources/css/register.css', 
+        'resources/css/dashboard.css',
+        'resources/css/index.css',
+        'resources/css/create-computer.css',
+        'resources/css/edit-computer.css'
+    ]) <!-- Incluir aquí más css-->
 </head>
 
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -39,17 +35,14 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesion') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                                 </li>
                             @endif
 
@@ -65,9 +58,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        {{ __('Perfil') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Cerrar Sesión') }}
                                     </a>
 
@@ -83,19 +79,6 @@
         </nav>
 
         <main class="py-4">
-            {{-- Mensajes de sesión --}}
-            @if(session('success'))
-                <div class="alert alert-success" style="margin-bottom: 15px;">
-                    {{ session('success') }}
-                </div>
-            @endif
-            
-            @if(session('error'))
-                <div class="alert alert-danger" style="margin-bottom: 15px;">
-                    {{ session('error') }}
-                </div>
-            @endif
-            
             @yield('content')
         </main>
     </div>

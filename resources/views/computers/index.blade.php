@@ -17,8 +17,6 @@
         <thead>
             <tr>
                 <th>Procesador</th>
-                <th>Módulos RAM</th>
-                <th>Capacidad RAM (GB)</th>
                 <th>GPU</th>
                 <th>Acciones</th>
             </tr>
@@ -26,10 +24,8 @@
         <tbody>
             @foreach ($computers as $computer)
                 <tr>
-                    <td>{{ $computer->procesador }}</td>
-                    <td>{{ $computer->modulos_ram }}</td>
-                    <td>{{ $computer->capacidad_ram }}</td>
-                    <td>{{ $computer->gpu }}</td>
+                    <td>{{ $computer->processor->name }}</td>
+                    <td>{{ $computer->gpu->name }}</td>
                     <td>
                         <a class="btn-edit" href="{{ route('computers.edit', $computer) }}">Editar</a>
                         <form action="{{ route('computers.destroy', $computer) }}" method="POST" style="display:inline;">
