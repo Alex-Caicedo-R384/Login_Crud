@@ -9,14 +9,23 @@ class Computer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['procesador', 'gpu', 'user_id']; // Asegúrate de agregar 'user_id'
+    protected $fillable = ['processor_id', 'gpu_id', 'user_id', 'processor_name', 'gpu_name'];
 
-    /**
-     * Relación con el modelo User
-     */
     public function user()
     {
-        return $this->belongsTo(User::class); // Relación inversa con el modelo User
+        return $this->belongsTo(User::class);
+    }
+
+    public function processor()
+    {
+        return $this->belongsTo(Processor::class, 'processor_id');
+    }
+
+    public function gpu()
+    {
+        return $this->belongsTo(Gpu::class, 'gpu_id');
     }
 }
+
+
 

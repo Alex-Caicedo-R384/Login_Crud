@@ -19,7 +19,8 @@
         'resources/css/dashboard.css',
         'resources/css/index.css',
         'resources/css/create-computer.css',
-        'resources/css/edit-computer.css'
+        'resources/css/edit-computer.css',
+        'resources/css/create-cpu-gpu.css'
     ]) <!-- Incluir aquí más css-->
 </head>
 

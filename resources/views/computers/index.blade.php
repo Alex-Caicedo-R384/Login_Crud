@@ -13,15 +13,18 @@
 
     <a class="btn" href="{{ route('computers.create') }}">Crear Computadora</a>
 
-    <table class="computer-table">
-        <thead>
-            <tr>
-                <th>Procesador</th>
-                <th>GPU</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
+    @if ($computers->isEmpty())
+        <p>No tienes computadoras registradas.</p>
+    @else
+        <table class="computer-table">
+            <thead>
+                <tr>
+                    <th>Procesador</th>
+                    <th>GPU</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
             @foreach ($computers as $computer)
                 <tr>
                     <td>{{ $computer->processor->name }}</td>
@@ -36,6 +39,7 @@
                     </td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    @endif
 @endsection

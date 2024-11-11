@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Computer;
+use App\Models\Processor;
+use App\Models\Gpu;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,31 +12,49 @@ class ComputerController extends Controller
 {
     public function index()
     {
-        $computers = Computer::all();
+        $computers = Computer::with(['processor', 'gpu'])
+                             ->where('user_id', auth()->user()->id)
+                             ->get();    
+    
         return view('computers.index', compact('computers'));
     }
-
+    
+    
     public function create()
     {
-        $procesadores = Processor::all();
+        $processors = Processor::all();
         $gpus = Gpu::all();
-
-        return view('computers.create', compact('procesadores', 'gpus'));
+        return view('computers.create', compact('processors', 'gpus'));
     }
+    
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'procesador' => 'required',
-            'gpu' => 'required',
-            'user_id' => 'required|exists:users,id',
+        $request->validate([
+            'processor_name' => 'required|exists:processors,name',
+            'gpu_name' => 'required|exists:gpus,name',
         ]);
-
-        $computer = Computer::create($validated);
-
-        return redirect()->route('computers.index')->with('success', 'Computadora creada exitosamente');
+    
+        $processor = Processor::where('name', $request->input('processor_name'))->first();
+        $gpu = Gpu::where('name', $request->input('gpu_name'))->first();
+    
+        if (!$processor || !$gpu) {
+            return back()->withErrors(['error' => 'Procesador o GPU no encontrados']);
+        }
+    
+        Computer::create([
+            'processor_id' => $processor->id,
+            'processor_name' => $processor->name,
+            'gpu_id' => $gpu->id,
+            'gpu_name' => $gpu->name,
+            'user_id' => auth()->user()->id,
+        ]);
+    
+        return redirect()->route('computers.index')->with('success', 'Computadora creada con éxito.');
     }
-
+    
+    
+    
     public function edit(Computer $computer)
     {
         $procesadores = Processor::all();

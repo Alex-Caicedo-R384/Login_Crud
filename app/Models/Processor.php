@@ -10,6 +10,11 @@ class Processor extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function computers()
+    {
+        return $this->hasMany(Computer::class); // Relación uno a muchos
+    }
 }
 
 

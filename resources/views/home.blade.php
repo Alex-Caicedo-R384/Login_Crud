@@ -17,12 +17,13 @@
             @endif
 
             @if (Auth::user()->is_admin)
-                <p>{{ __('Eres administrador') }}</p>
+                <a href="{{ route('gpus.index') }}" class="btn btn-primary">{{ __('GPUS') }}</a>
+                <a href="{{ route('processors.index') }}" class="btn btn-primary">{{ __('CPUS') }}</a>
             @else
                 <p>{{ __('No eres administrador') }}</p>
             @endif
 
-            <a href="{{ route('computers.index') }}" class="btn">{{ __('Index Computadoras') }}</a>
+            <a href="{{ route('computers.index') }}" class="btn">{{ __('COMPUTADORAS') }}</a>
         </section>
     </article>
 </section>

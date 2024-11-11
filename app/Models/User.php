@@ -20,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin', // Asegúrate de incluir este campo en tu base de datos
+        'is_admin',
     ];
 
     /**

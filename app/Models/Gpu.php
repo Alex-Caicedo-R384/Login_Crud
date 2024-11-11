@@ -10,6 +10,11 @@ class Gpu extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function computers()
+    {
+        return $this->hasMany(Computer::class);
+    }
 }
 
 
