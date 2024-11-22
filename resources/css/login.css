@@ -1,59 +1,106 @@
+/* Contenedor principal */
 .container {
-    max-width: 700px;
-    margin: auto;
+    max-width: 500px; /* Reduce el ancho para un diseño más compacto */
+    margin: 40px auto; /* Centra verticalmente con espacio superior */
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra sutil */
 }
+
+/* Grupos de formulario */
 .form-group {
     display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+    flex-direction: column; /* Cambia a columna para mejor alineación */
+    margin-bottom: 15px; /* Espaciado uniforme entre los campos */
 }
 
 .form-label {
-    width: 100px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
 }
 
 .form-input {
-    flex: 1;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
+.form-input:focus {
+    outline: none;
+    border-color: #326fb1; /* Color de borde en foco */
+    box-shadow: 0 0 5px rgba(50, 111, 177, 0.5); /* Sombra en foco */
+}
+
+/* Checkbox */
 .form-check {
-    margin-bottom: 1px;
-}
-
-.invalid-feedback {
-    color: red;
-    font-size: 12px;
-}
-
-.form-group {
     display: flex;
     align-items: center;
-    gap: 10px; /* Ajusta este valor para cambiar la separación entre los elementos */
+    gap: 10px;
+    font-size: 14px;
+    color: #555;
 }
 
+/* Mensaje de error */
+.invalid-feedback {
+    color: #ff4d4f;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Botón de envío */
 .submit-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
     background-color: #326fb1;
-    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .submit-btn:hover {
-    background-color: #1a3e64;
-    color: #fff; /* Cambia el color del texto al blanco */
+    background-color: #244d7a;
+    transform: scale(1.05); /* Efecto de aumento */
 }
 
+.submit-btn:active {
+    transform: scale(0.95); /* Efecto de pulsación */
+}
+
+/* Enlace */
 .btn-link {
-    color: #007bff; /* Color del enlace */
+    color: #326fb1;
     text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
 }
 
 .btn-link:hover {
-    color: #0056b3; /* Color del enlace al pasar el ratón */
+    color: #244d7a;
     text-decoration: underline;
 }
 
+/* Mensajes de alerta */
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
 
-
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}

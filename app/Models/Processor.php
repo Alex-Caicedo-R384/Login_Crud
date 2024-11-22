@@ -13,7 +13,7 @@ class Processor extends Model
 
     public function computers()
     {
-        return $this->hasMany(Computer::class); // Relación uno a muchos
+        return $this->hasMany(Computer::class);
     }
 }
 
