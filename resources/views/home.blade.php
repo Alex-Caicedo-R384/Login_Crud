@@ -24,7 +24,11 @@
                     <h2>{{ __('Administración') }}</h2>
                     <p>{{ __('Eres administrador. Gestiona las secciones de GPUs y CPUs.') }}</p>
                     <a href="{{ route('gpus.index') }}" class="btn action-btn">{{ __('GPUs') }}</a>
-                    <a href="{{ route('processors.index') }}" class="btn action-btn">{{ __('CPUs') }}</a>
+                    <a href="{{ route('processors.index') }}" class="btn action-btn">{{ __('CPU') }}</a>
+                    <a href="{{ route('juegos.index') }}" class="btn action-btn">{{ __('JUEGOS') }}</a>
+                    <a href="{{ route('configuracion.index') }}" class="btn action-btn">{{ __('CONFIGURACION') }}</a>
+                    <a href="{{ route('benchmark.index') }}" class="btn action-btn">{{ __('BENCHMARK') }}</a>
+
                 </div>
             @else
                 <div class="action-card user-card">

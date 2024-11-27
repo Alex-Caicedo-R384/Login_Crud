@@ -9,6 +9,8 @@ class Processor extends Model
 {
     use HasFactory;
 
+    protected $table = 'processors';
+
     protected $fillable = ['name'];
 
     public function computers()

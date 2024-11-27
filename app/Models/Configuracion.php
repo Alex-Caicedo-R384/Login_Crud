@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Gpu extends Model
+class Configuracion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $table = 'configuracion';
 
-    public function computers()
+    protected $fillable = ['resolucion', 'preset', 'rtx', 'juego_id'];
+
+    public function juegos()
     {
-        return $this->hasMany(Computer::class);
+        return $this->belongsToMany(Juego::class, 'juego_configuracion');
     }
 
     public function benchmarks()
@@ -21,6 +23,4 @@ class Gpu extends Model
         return $this->hasMany(Benchmark::class);
     }
 }
-
-
 
