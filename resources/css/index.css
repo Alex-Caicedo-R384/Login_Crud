@@ -1,4 +1,3 @@
-/* Global Styles */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -8,7 +7,7 @@ body {
     line-height: 1.6;
 }
 
-h1 {
+.title {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
@@ -16,13 +15,11 @@ h1 {
     text-align: center;
 }
 
-/* Alert Styles */
 .alert {
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
     font-size: 1rem;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .alert-success {
@@ -31,7 +28,15 @@ h1 {
     border: 1px solid #c3e6cb;
 }
 
-/* Button Styles */
+.actions {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.actions .btn {
+    margin: 0;
+}
+
 .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -88,33 +93,32 @@ h1 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.table-container table {
+.computer-table {
     width: 100%;
-    min-width: 600px;
     border-collapse: collapse;
     font-size: 1rem;
     text-align: left;
     color: #333;
 }
 
-.table-container th,
-.table-container td {
+.computer-table th,
+.computer-table td {
     padding: 12px 15px;
     border: 1px solid #ddd;
 }
 
-.table-container th {
+.computer-table th {
     background-color: #f1f1f1;
     font-weight: bold;
     text-transform: uppercase;
     color: #555;
 }
 
-.table-container tr:nth-child(even) {
+.computer-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.table-container tr:hover {
+.computer-table tr:hover {
     background-color: #eef1f7;
     cursor: pointer;
 }
@@ -125,33 +129,6 @@ h1 {
     justify-content: flex-start;
 }
 
-/* Responsive Table */
-@media screen and (max-width: 768px) {
-    .table-container table {
-        font-size: 0.9rem;
-    }
-
-    .table-container th,
-    .table-container td {
-        padding: 8px 10px;
-    }
-
-    .action-buttons {
-        flex-direction: column;
-    }
-}
-
-/* Container for action buttons */
-.actions {
-    text-align: right;
-    margin-bottom: 20px;
-}
-
-.actions .btn {
-    margin: 0;
-}
-
-/* Ensure the body is padded on small screens */
-body {
-    padding: 10px;
+.inline-form {
+    display: inline;
 }

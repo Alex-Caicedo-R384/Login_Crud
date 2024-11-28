@@ -22,7 +22,9 @@
         'resources/css/create-computer.css',
         'resources/css/edit-computer.css',
         'resources/css/create-cpu-gpu.css',
-        'resources/css/header.css'
+        'resources/css/header.css',
+        'resources/css/benchmarks.css',
+        'resources/css/modal.css'
     ]) <!-- Incluir aquí más css-->
 </head>
 

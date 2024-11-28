@@ -6,6 +6,7 @@
     border-radius: 8px;
     background-color: #f8f9fa;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Encabezado */
@@ -15,20 +16,21 @@
 }
 
 .dashboard-header h1 {
-    font-size: 2rem;
-    color: #333;
+    font-size: 2.5rem;
+    color: #2c3e50;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .dashboard-header p {
     font-size: 1.2rem;
-    color: #555;
+    color: #7f8c8d;
 }
 
 .dashboard-alert {
-    background-color: #ffeeba;
-    color: #856404;
-    border: 1px solid #ffeeba;
+    background-color: #e9f7ef;
+    color: #27ae60;
+    border: 1px solid #27ae60;
     padding: 10px 15px;
     border-radius: 4px;
     margin-bottom: 20px;
@@ -42,19 +44,51 @@
     justify-content: center;
 }
 
+/* Contenedor de acciones (tarjetas) */
+.dashboard-actions {
+    display: grid; /* Cambiar a grid */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Tarjetas adaptativas */
+    gap: 20px; /* Espacio entre las tarjetas */
+    margin-top: 20px;
+}
+
 /* Tarjetas de acción */
 .action-card {
-    flex: 1 1 calc(33% - 20px);
-    max-width: 300px;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
-    margin-bottom: 20px;
+    border-top: 4px solid #326fb1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Tarjeta de administrador */
+.action-card.admin-card {
+    border-top-color: #e74c3c;
+}
+
+/* Botones en la tarjeta de administración */
+.action-card.admin-card .action-btn {
+    display: block; /* Cada botón ocupa una línea completa */
+    margin: 10px auto; /* Espaciado entre botones */
+    width: 90%; /* Ancho limitado */
+    text-align: center;
+}
+
+/* Estilo de las demás tarjetas */
+.action-card.user-card {
+    border-top-color: #27ae60;
+}
+
+.action-card.used-card {
+    border-top-color: #8e44ad;
+}
 
 .action-card:hover {
     transform: translateY(-5px);
@@ -63,13 +97,14 @@
 
 .action-card h2 {
     font-size: 1.5rem;
-    color: #333;
+    color: #34495e;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .action-card p {
     font-size: 1rem;
-    color: #666;
+    color: #7f8c8d;
     margin-bottom: 20px;
 }
 
@@ -85,6 +120,10 @@
     font-weight: 500;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.action-btn i {
+    margin-right: 5px;
 }
 
 .action-btn:hover {

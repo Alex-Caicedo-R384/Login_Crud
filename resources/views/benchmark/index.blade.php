@@ -30,9 +30,6 @@
                     <th scope="col">GPU</th>
                     <th scope="col">CPU</th>
                     <th scope="col">Avg FPS</th>
-                    <th scope="col">Min FPS</th>
-                    <th scope="col">CPU Usage</th>
-                    <th scope="col">GPU Usage</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -40,13 +37,10 @@
                 @foreach ($benchmarks as $benchmark)
                     <tr>
                         <td>{{ $benchmark->juego->nombre }}</td>
-                        <td>{{ $benchmark->configuracion->resolucion }}</td>
+                        <td>{{ $benchmark->configuracion->resolucion }} / {{ $benchmark->configuracion->preset }} / {{ $benchmark->configuracion->rtx }}</td>
                         <td>{{ $benchmark->gpu->name }}</td>
                         <td>{{ $benchmark->processor->name }}</td>
                         <td>{{ $benchmark->avg_fps }}</td>
-                        <td>{{ $benchmark->min_fps }}</td>
-                        <td>{{ $benchmark->cpu_usage }}%</td>
-                        <td>{{ $benchmark->gpu_usage }}%</td>
                         <td class="action-buttons">
                             {{-- Botón de edición --}}
                             <a class="btn-edit" href="{{ route('benchmark.edit', $benchmark) }}">Editar</a>

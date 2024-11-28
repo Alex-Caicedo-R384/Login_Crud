@@ -1,0 +1,155 @@
+/* Estilo general del modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding-top: 60px;
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 40px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Contenedor de contenido dentro del modal */
+.modal-body-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start; /* Alineación ajustada */
+    gap: 30px; /* Espacio entre la imagen y los detalles */
+    flex-wrap: wrap; /* Permite que los elementos se acomoden en pantallas pequeñas */
+}
+
+/* Estilo de la imagen en el modal */
+.game-image {
+    height: auto;
+    max-width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    margin-top: 70px; /* Añadir margen superior para bajarla un poco más */
+    margin-bottom: 10px;
+}
+
+
+/* Sección de detalles a la derecha */
+#detailsContent {
+    flex: 1;
+    min-width: 300px; /* Ancho mínimo para los detalles */
+    margin-top: 0;
+}
+
+/* Estilo de los detalles del modal */
+#detailsContent h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #d4006a;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+#detailsContent p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+#detailsContent ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#detailsContent ul li {
+    font-size: 1.1em;
+    color: #444;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#detailsContent ul li:last-child {
+    border-bottom: none;
+}
+
+/* Estilo de los detalles del modal - Títulos */
+#detailsContent h4 {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #d4006a;
+    margin-top: 30px;
+}
+
+/* Estilos del botón de cierre */
+.close-btn {
+    color: #d4006a;
+    height: 60px;
+    width: 50px;
+    font-size: 24px; /* Ícono más pequeño */
+    font-weight: bold;
+    position: absolute;
+    top: 0px; /* Mueve el botón más hacia abajo */
+    right: 0px; /* Mueve el botón más hacia la izquierda */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transición para todos los cambios */
+    background: #fff;
+    border-radius: 10px; /* Mantener redondeado */
+    border: 3px solid #d4006a; /* Borde por defecto */
+}
+
+/* Efecto hover */
+.close-btn:hover {
+    transform: scale(1.1); /* Hace que el botón se agrande ligeramente */
+}
+
+.close-btn:focus {
+    outline: none;
+}
+
+/* Hacer que el modal sea más responsivo */
+@media screen and (max-width: 768px) {
+    .modal-body-content {
+        flex-direction: column; /* Poner los elementos en columna en pantallas pequeñas */
+        align-items: center; /* Centrar los elementos */
+        gap: 20px; /* Reducir el espacio entre los elementos */
+    }
+
+    .game-image {
+        max-width: 100%; /* Asegurarse de que la imagen no sobrepase el contenedor */
+        height: auto; /* Ajustar la altura de la imagen */
+    }
+
+    #detailsContent {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    #detailsContent h2 {
+        font-size: 1.5em;
+    }
+
+    #detailsContent p, #detailsContent ul li {
+        font-size: 1em;
+    }
+
+    #detailsContent h4 {
+        font-size: 1.2em;
+    }
+}
