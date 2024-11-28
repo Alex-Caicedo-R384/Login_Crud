@@ -21,17 +21,31 @@ class ProcessorController extends Controller
 
     public function store(Request $request)
     {
+        // Validación
         $request->validate([
-            'name' => 'required|string|max:255',
+            'base' => 'required|string|in:R3,R5,R7,R9,I3,I5,I7,I9',
+            'suffix' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($request) {
+                    $forbiddenWords = ['R3', 'R5', 'R7', 'R9', 'I3', 'I5', 'I7', 'I9'];
+                    foreach ($forbiddenWords as $word) {
+                        if (stripos($value, $word) !== false) {
+                            $fail("El uso de la categoría ya está en la lista de abajo, no la ingreses con lo demas");
+                        }
+                    }
+                },
+            ],
         ]);
-
-
-        Processor::create([
-            'name' => $request->name,
-        ]);
-
+    
+        $fullName = "{$request->base} {$request->suffix}";
+    
+        Processor::create(['name' => $fullName]);
+    
         return redirect()->route('processors.index')->with('status', 'Procesador agregado correctamente');
     }
+    
 
     public function edit($id)
     {

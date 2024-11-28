@@ -19,18 +19,38 @@ class GpuController extends Controller
         return view('gpus.create');
     }
 
+    
     public function store(Request $request)
     {
+        // Validación
         $request->validate([
-            'name' => 'required|string|max:255',
+            'base' => 'required|string|in:RTX,RX,ARC',
+            'suffix' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($request) {
+                    $forbiddenWords = ['RTX', 'RX', 'ARC'];
+                    foreach ($forbiddenWords as $word) {
+                        if (stripos($value, $word) !== false) {
+                            $fail("No debes ingresar: RTX, RX o ARC.");
+                        }
+                    }
+                },
+            ],
         ]);
 
-        Gpu::create([
-            'name' => $request->name,
-        ]);
+        // Concatenar tipo y modelo
+        $fullName = "{$request->base} {$request->suffix}";
 
+        // Crear el registro en la base de datos
+        Gpu::create(['name' => $fullName]);
+
+        // Redirigir al índice con mensaje de éxito
         return redirect()->route('gpus.index')->with('status', 'GPU agregada correctamente');
     }
+
+    
 
     public function edit($id)
     {
