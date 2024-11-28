@@ -24,6 +24,7 @@
         'resources/css/create-cpu-gpu.css',
         'resources/css/header.css',
         'resources/css/benchmarks.css',
+        'resources/css/tabla.css',
         'resources/css/modal.css'
     ]) <!-- Incluir aquí más css-->
 </head>

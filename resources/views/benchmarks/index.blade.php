@@ -14,11 +14,17 @@
                     <input type="hidden" name="benchmark_id" value="{{ $benchmark->id }}">
                     <button type="submit" class="btn-card">
                         <figure class="card-img-container">
-                            <img src="{{ asset('images/' . $images[$benchmark->juego->id]) }}" class="card-img-top" alt="{{ $benchmark->juego->name }}">
+                            <img src="{{ asset('images/' . $images[$benchmark->juego->id]) }}" class="card-img-top" alt="{{ $benchmark->juego->nombre }}">
                             <figcaption class="fps-badge">{{ $benchmark->avg_fps }} FPS</figcaption> <!-- FPS Badge -->
                         </figure>
                         <section class="card-body">
                             <h5 class="card-title text-center">{{ $benchmark->juego->nombre }}</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Gráfica:</strong> {{ $benchmark->gpu->name }}</li>
+                                <li class="list-group-item"><strong>Resolución:</strong> {{ $benchmark->configuracion->resolucion }}</li>
+                                <li class="list-group-item"><strong>Preset:</strong> {{ $benchmark->configuracion->preset }}</li>
+                                <li class="list-group-item"><strong>RTX:</strong> {{ $benchmark->configuracion->rtx }}</li>
+                            </ul>
                         </section>
                     </button>
                 </form>
@@ -46,43 +52,38 @@
                         <li><strong>Preset:</strong> {{ $preset }}</li>
                         <li><strong>RTX:</strong> {{ $rtx }}</li>
                     </ul>
-                    
-                    <h4>Mejor Gráfica con:</h4>
-                    <ul>
-                        <li><strong>Gráfica recomendada:</strong> {{ $selectedBenchmark->gpu->name }}</li>
-                    </ul>
-
-                    <h4>Comparativa de Configuraciones:</h4>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Configuración</th>
-                                <th>FPS</th>
-                                <th>Mejora en FPS</th>
-                                <th>Gráfica</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($comparisonData as $data)
-                                @php
-                                    $isSelected = $data['benchmark']->id == $selectedBenchmark->id;
-                                @endphp
-                                <tr class="{{ $isSelected ? 'table-warning' : '' }}">
-                                    <td>{{ $data['config']->resolucion }} - {{ $data['config']->preset }} - {{ $data['config']->rtx }}</td>
-                                    <td>{{ $data['benchmark']->avg_fps }} FPS</td>
-                                    <td>{{ number_format($data['fps_improvement'], 2) }}%</td>
-                                    <td>
-                                        @if($isSelected)
-                                            <strong>Gráfica Seleccionada</strong>
-                                        @else
-                                            {{ $data['benchmark']->gpu->name }}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
                 </section>
+                <section>
+                <h4 class="comparativa-title">Comparativa de Configuraciones:</h4>
+                <table class="table comparativa-table">
+                    <thead>
+                        <tr>
+                            <th>Configuración</th>
+                            <th>FPS</th>
+                            <th>Mejora en FPS</th>
+                            <th>Gráfica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($comparisonData as $data)
+                            @php
+                                $isSelected = $data['benchmark']->id == $selectedBenchmark->id;
+                            @endphp
+                            <tr class="{{ $isSelected ? 'selected-row' : '' }}">
+                                <td>{{ $data['config']->resolucion }} - {{ $data['config']->preset }} - {{ $data['config']->rtx }}</td>
+                                <td>{{ $data['benchmark']->avg_fps }} FPS</td>
+                                <td class="fps-improvement">
+                                    {{ number_format($data['fps_improvement'], 2) }}%
+                                </td>
+                                <td class="gpu-brand {{ strpos($data['benchmark']->gpu->name, 'RX') !== false ? 'gpu-amd' : (strpos($data['benchmark']->gpu->name, 'RTX') !== false ? 'gpu-nvidia' : '') }}">
+                                    {{ $isSelected ? 'Gráfica Seleccionada' : $data['benchmark']->gpu->name }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </section>
+
             </section>
         </article>
     </section>
