@@ -4,6 +4,27 @@
 <section class="container">
     <h1 class="text-center mb-4">Explorar Juegos</h1>
 
+    <!-- Seleccionar GPU -->
+    <section class="container">
+        <h2>Seleccionar GPU</h2>
+        <form action="{{ route('benchmarks.index') }}" method="GET">
+            <label for="gpu">Elige una GPU:</label>
+            <select name="gpu_id" id="gpu" class="form-control">
+                @foreach ($gpus as $gpu)
+                    <option value="{{ $gpu->id }}">{{ $gpu->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit" class="btn btn-primary mt-2">Filtrar</button>
+        </form>
+
+        @if (isset($benchmarks))
+            @if ($benchmarks->isEmpty())
+                <p class="error-message">No se encontraron benchmarks para la GPU seleccionada.</p>
+            @else
+            @endif
+        @endif
+    </section>
+
     <!-- Lista de Juegos -->
     <section class="row" id="juegos">
         @foreach ($benchmarks as $benchmark)
@@ -88,6 +109,5 @@
         </article>
     </section>
     @endif
-
 </section>
 @endsection

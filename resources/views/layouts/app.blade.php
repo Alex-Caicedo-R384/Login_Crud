@@ -6,7 +6,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'WEAS') }}</title>
 
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -34,7 +34,7 @@
             <header class="navbar">
                 <div class="container">
                     <span class="navbar-brand" href="{{ route('home') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'WEAS') }}
                     </span>
 
                     <nav class="navbar-links">

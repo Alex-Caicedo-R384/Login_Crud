@@ -9,7 +9,7 @@
 <section class="dashboard-container">
     <header class="dashboard-header">
         <h1>{{ __('Bienvenido, ') . Auth::user()->name }}</h1>
-        <p>{{ __('Esta es el área donde puedes ver los CRUDS.') }}</p>
+        <p>{{ __('Esta es el área donde puedes navegar.') }}</p>
     </header>
 
     <section class="dashboard-content">
@@ -38,9 +38,7 @@
             @endif
 
             <div class="action-card used-card">
-                <h2><i class="fas fa-desktop"></i> {{ __('Computadoras') }}</h2>
-                <p>{{ __('Explora las computadoras registradas en el sistema.') }}</p>
-                <a href="{{ route('computers.index') }}" class="btn action-btn"><i class="fas fa-desktop"></i> {{ __('Computadoras') }}</a>
+                <p>{{ __('Explora los Benchmark registrados en el sistema.') }}</p>
                 <a href="{{ route('benchmarks.index') }}" class="btn action-btn"><i class="fas fa-desktop"></i> {{ __('Benchmarks') }}</a>
             </div>
         </div>
