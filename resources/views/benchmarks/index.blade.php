@@ -27,30 +27,49 @@
 
     <!-- Lista de Juegos -->
     <section class="row" id="juegos">
-        @foreach ($benchmarks as $benchmark)
-        <article class="col-md-4 mb-4">
-            <article class="card juego-card" style="cursor: pointer;">
-                <form action="{{ route('benchmarks.index') }}" method="GET">
-                    @csrf
-                    <input type="hidden" name="benchmark_id" value="{{ $benchmark->id }}">
-                    <button type="submit" class="btn-card">
-                        <figure class="card-img-container">
-                            <img src="{{ asset('images/' . $images[$benchmark->juego->id]) }}" class="card-img-top" alt="{{ $benchmark->juego->nombre }}">
-                            <figcaption class="fps-badge">{{ $benchmark->avg_fps }} FPS</figcaption> <!-- FPS Badge -->
-                        </figure>
-                        <section class="card-body">
-                            <h5 class="card-title text-center">{{ $benchmark->juego->nombre }}</h5>
-                            <ul class="list-group">
-                                <li class="list-group-item"><strong>Gráfica:</strong> {{ $benchmark->gpu->name }}</li>
-                                <li class="list-group-item"><strong>Resolución:</strong> {{ $benchmark->configuracion->resolucion }}</li>
-                                <li class="list-group-item"><strong>Preset:</strong> {{ $benchmark->configuracion->preset }}</li>
-                                <li class="list-group-item"><strong>RTX:</strong> {{ $benchmark->configuracion->rtx }}</li>
-                            </ul>
-                        </section>
-                    </button>
-                </form>
-            </article>
-        </article>
+        @foreach ($groupedByCategory as $categoria => $benchmarksInCategory)
+            <h2 class="category-title">{{ $categoria }}</h2>
+
+            @if ($categoria == 'Competitivo' || $categoria == 'Triple A' || $categoria == 'Peleas')
+                <div class="best-gpu-message">
+                    @if ($bestGpu && $categoria == $selectedBenchmark->juego->categoria)
+                        <p><strong>La mejor gráfica para esta categoría de juego ({{ $categoria }}) es:</strong> {{ $bestGpu->name }}.</p>
+                        <p><strong>FPS promedio:</strong> {{ $bestFps }} FPS.</p>
+                        <p><strong>Resolución recomendada:</strong> {{ $bestConfig ? $bestConfig->resolucion : 'No disponible' }}.</p>
+                        @if ($bestConfig && $bestConfig->rtx == 'Sí')
+                            <p><strong>La configuración cuenta con RTX.</strong></p>
+                        @endif
+                    @else
+                        <p>No se ha encontrado una configuración recomendada para esta categoría.</p>
+                    @endif
+                </div>
+            @endif
+
+            @foreach ($benchmarksInCategory as $benchmark)
+                <article class="col-md-4 mb-4">
+                    <article class="card juego-card" style="cursor: pointer;">
+                        <form action="{{ route('benchmarks.index') }}" method="GET">
+                            @csrf
+                            <input type="hidden" name="benchmark_id" value="{{ $benchmark->id }}">
+                            <button type="submit" class="btn-card">
+                                <figure class="card-img-container">
+                                    <img src="{{ asset('images/' . $images[$benchmark->juego->id]) }}" class="card-img-top" alt="{{ $benchmark->juego->nombre }}">
+                                    <figcaption class="fps-badge">{{ $benchmark->avg_fps }} FPS</figcaption>
+                                </figure>
+                                <section class="card-body">
+                                    <h5 class="card-title text-center">{{ $benchmark->juego->nombre }}</h5>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><strong>Gráfica:</strong> {{ $benchmark->gpu->name }}</li>
+                                        <li class="list-group-item"><strong>Resolución:</strong> {{ $benchmark->configuracion->resolucion }}</li>
+                                        <li class="list-group-item"><strong>Preset:</strong> {{ $benchmark->configuracion->preset }}</li>
+                                        <li class="list-group-item"><strong>RTX:</strong> {{ $benchmark->configuracion->rtx }}</li>
+                                    </ul>
+                                </section>
+                            </button>
+                        </form>
+                    </article>
+                </article>
+            @endforeach
         @endforeach
     </section>
 
@@ -82,6 +101,10 @@
                             <th>Configuración</th>
                             <th>FPS</th>
                             <th>Mejora en FPS</th>
+                            <th>Uso de CPU</th>
+                            <th>Diferencia en CPU</th>
+                            <th>Uso de GPU</th>
+                            <th>Diferencia en GPU</th>
                             <th>Gráfica</th>
                         </tr>
                     </thead>
@@ -91,10 +114,26 @@
                                 $isSelected = $data['benchmark']->id == $selectedBenchmark->id;
                             @endphp
                             <tr class="{{ $isSelected ? 'selected-row' : '' }}">
-                                <td>{{ $data['config']->resolucion }} - {{ $data['config']->preset }} - {{ $data['config']->rtx }}</td>
+                                <td>
+                                    {{ $data['config']->resolucion ?? 'N/A' }} - 
+                                    {{ $data['config']->preset ?? 'N/A' }} - 
+                                    {{ $data['config']->rtx ?? 'N/A' }}
+                                </td>
                                 <td>{{ $data['benchmark']->avg_fps }} FPS</td>
                                 <td class="fps-improvement">
                                     {{ number_format($data['fps_improvement'], 2) }}%
+                                </td>
+                                <td>
+                                    {{ number_format($data['benchmark']->cpu_usage, 2) }}% 
+                                </td>
+                                <td class="cpu-usage-diff">
+                                    {{ number_format($data['cpu_usage_diff'], 2) }}%
+                                </td>
+                                <td>
+                                    {{ number_format($data['benchmark']->gpu_usage, 2) }}%
+                                </td>
+                                <td class="gpu-usage-diff">
+                                    {{ number_format($data['gpu_usage_diff'], 2) }}%
                                 </td>
                                 <td class="gpu-brand {{ strpos($data['benchmark']->gpu->name, 'RX') !== false ? 'gpu-amd' : (strpos($data['benchmark']->gpu->name, 'RTX') !== false ? 'gpu-nvidia' : '') }}">
                                     {{ $isSelected ? 'Gráfica Seleccionada' : $data['benchmark']->gpu->name }}
@@ -104,7 +143,6 @@
                     </tbody>
                 </table>
             </section>
-
             </section>
         </article>
     </section>

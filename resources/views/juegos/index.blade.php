@@ -9,6 +9,7 @@
             <thead>
                 <tr>
                     <th>Nombre</th>
+                    <th>Categoría</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -16,6 +17,7 @@
                 @foreach ($juegos as $juego)
                     <tr>
                         <td>{{ $juego->nombre }}</td>
+                        <td>{{ $juego->categoria }}</td>
                         <td>
                             <a href="{{ route('juegos.edit', $juego->id) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('juegos.destroy', $juego->id) }}" method="POST" style="display:inline;">

@@ -40,11 +40,24 @@ class BenchmarkController extends Controller
             'cpu_usage' => 'required|numeric',
             'gpu_usage' => 'required|numeric',
         ]);
-
-        Benchmark::create($request->all());
-
+    
+        $juego = Juego::findOrFail($request->juego_id);
+    
+        Benchmark::create([
+            'juego_id' => $request->juego_id,
+            'configuracion_id' => $request->configuracion_id,
+            'gpu_id' => $request->gpu_id,
+            'cpu_id' => $request->cpu_id,
+            'avg_fps' => $request->avg_fps,
+            'min_fps' => $request->min_fps,
+            'cpu_usage' => $request->cpu_usage,
+            'gpu_usage' => $request->gpu_usage,
+            'categoria' => $juego->categoria,
+        ]);
+    
         return redirect()->route('benchmark.index');
     }
+    
 
     public function edit($id)
     {

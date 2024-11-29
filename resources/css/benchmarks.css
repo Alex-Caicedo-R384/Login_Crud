@@ -83,3 +83,55 @@ button:focus {
     color: #666;
     margin-bottom: 15px;
 }
+
+/* Estilo para el contenedor del mensaje de la mejor GPU */
+.best-gpu-message {
+    background-color: #e1f7fa; /* Color de fondo suave */
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Título dentro del mensaje */
+.best-gpu-message strong {
+    color: #00796b; /* Un color verde para destacar el texto */
+    font-size: 16px;
+}
+
+/* Mensajes de la mejor GPU y la configuración */
+.best-gpu-message p {
+    font-size: 14px;
+    color: #333;
+    margin: 10px 0;
+}
+
+/* Estilo para los mensajes cuando no hay una configuración recomendada */
+.best-gpu-message p.no-recommended {
+    color: #d32f2f; /* Color rojo para alertar sobre la falta de configuración */
+    font-weight: bold;
+}
+
+/* Estilo adicional para el mensaje de RTX */
+.best-gpu-message p.rtx {
+    color: #ffeb3b; /* Amarillo para resaltar el RTX */
+    font-weight: bold;
+}
+
+/* Estilo cuando se pasa el cursor sobre el mensaje */
+.best-gpu-message:hover {
+    background-color: #b2ebf2; /* Color más claro cuando el usuario pasa el mouse */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo adicional para la categoría del juego */
+.category-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #00796b;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
