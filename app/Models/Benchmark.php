@@ -17,8 +17,9 @@ class Benchmark extends Model
         'avg_fps',
         'min_fps',
         'cpu_usage',
-        'gpu_usage'
-    ];
+        'gpu_usage',
+        'categoria'
+    ];  
     
     public function configuracion()
     {
