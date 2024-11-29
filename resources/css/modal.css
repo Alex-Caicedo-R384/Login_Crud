@@ -13,7 +13,7 @@
 
 /* Contenido del modal */
 .modal-content {
-    background-color: #fff;
+    background-color: #e9ecef;
     margin: 5% auto;
     padding: 40px;
     border-radius: 12px;
@@ -49,7 +49,6 @@
     margin-bottom: 10px;
 }
 
-
 /* Sección de detalles a la derecha */
 #detailsContent {
     flex: 1;
@@ -59,17 +58,18 @@
 
 /* Estilo de los detalles del modal */
 #detailsContent h2 {
-    font-size: 1.8em;
+    font-size: 30px;
     font-weight: bold;
+    bottom: 30px;
     color: #d4006a;
     margin-bottom: 20px;
     margin-top: 0;
 }
 
 #detailsContent p {
-    font-size: 1.1em;
+    font-size: 20px;
     line-height: 1.6;
-    color: #555;
+    color: #000;
     margin-bottom: 15px;
 }
 
@@ -79,8 +79,8 @@
 }
 
 #detailsContent ul li {
-    font-size: 1.1em;
-    color: #444;
+    font-size: 20px;
+    color: #000;
     padding: 8px 0;
     border-bottom: 1px solid #eee;
 }

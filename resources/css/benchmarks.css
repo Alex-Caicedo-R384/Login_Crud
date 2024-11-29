@@ -1,18 +1,19 @@
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 30px;
-    background-color: #f7f7f7;
+    background-color: #fff;
     border-radius: 12px;
 }
 
 .card {
+    background-color: #d4006a;
     border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     justify-content: space-between;
     height: 100%;
 }
@@ -20,17 +21,20 @@
 .card:hover {
     transform: scale(1.08);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    background-color: #2e2d2e;
 }
 
-.card-img-container {
-    position: relative;
+.card-img-container img {
+    width: 100%;
+    height: auto;
+    border-bottom: 5px solid #d4006a; 
 }
 
 .card-img-top {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-bottom: 3px solid #00bcd4;
+    border-bottom: 3px solid #d4006a;
 }
 
 .fps-badge {
@@ -38,7 +42,7 @@
     top: 10px;
     right: 10px;
     background-color: rgba(0, 0, 0, 0.7);
-    color: white;
+    color: #fff;
     padding: 5px 10px;
     font-size: 14px;
     font-weight: bold;
@@ -51,8 +55,8 @@ button {
     font-size: 16px;
     cursor: pointer;
     border-radius: 30px;
-    width: 100%; /* El botón ocupará todo el ancho disponible */
-    box-sizing: border-box; /* Para que el padding no afecte el ancho */
+    width: 100%;
+    box-sizing: border-box;
     transition: all 0.3s ease;
 }
 
@@ -61,17 +65,35 @@ button:focus {
 }
 
 .card-body {
+    background-color: #f9f9f9; /* Fondo claro para la sección */
+    border-radius: 20px; /* Bordes redondeados */
     padding: 20px;
-    text-align: center;
-    background-color: #fafafa;
 }
 
 .card-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #333;
-    margin: 15px 0;
-    text-transform: uppercase;
+    font-size: 25px;
+    color: #d4006a; /* Color azul para el título */
+    font-weight: bold;
+}
+
+.list-group-item {
+    background-color: #ffffff; /* Fondo blanco para cada ítem */
+    color: #333; /* Color de texto general */
+    border: 1px solid #ddd; /* Borde sutil */
+    padding: 12px 15px;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef; /* Fondo más oscuro al pasar el mouse */
+}
+
+.list-group-item strong {
+    color: #d4006a; /* Color azul para los elementos <strong> */
+    font-weight: bold; /* Asegurar que el texto en <strong> se vea más pesado */
+}
+
+.list-group-item strong:hover {
+    color: #000; /* Color más oscuro al pasar el ratón por encima */
 }
 
 .card-text {
@@ -81,7 +103,7 @@ button:focus {
 }
 
 .best-gpu-message {
-    background-color: #e1f7fa; /* Color de fondo suave */
+    background-color: #e9ecef; /* Color de fondo suave */
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
@@ -90,13 +112,13 @@ button:focus {
 }
 
 .best-gpu-message strong {
-    color: #00796b; /* Un color verde para destacar el texto */
-    font-size: 16px;
+    color: #d4006a; /* Un color verde para destacar el texto */
+    font-size: 20px;
 }
 
 .best-gpu-message p {
-    font-size: 14px;
-    color: #333;
+    font-size: 20px;
+    color: #000;
     margin: 10px 0;
 }
 
@@ -116,9 +138,9 @@ button:focus {
 }
 
 .category-title {
-    font-size: 24px;
+    font-size: 50px;
     font-weight: 700;
-    color: #00796b;
+    color: #d4006a;
     margin-top: 20px;
     text-transform: uppercase;
     text-align: center;

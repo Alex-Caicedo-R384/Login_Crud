@@ -9,6 +9,7 @@ use App\Http\Controllers\JuegoController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\BenchmarkController;
 use App\Http\Controllers\JuegoBenchmarkController;
+use App\Http\Middleware\CheckAdmin;
 
 
 Route::get('/', function () {
@@ -20,12 +21,19 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/benchmarks', [JuegoBenchmarkController::class, 'index'])->name('benchmarks.index');
+    Route::get('/benchmarks/{id}', [JuegoBenchmarkController::class, 'show'])->name('benchmarks.show');
+});
+
+Route::middleware(['auth', CheckAdmin::class])->group(function () {
     Route::resource('computers', ComputerController::class);
     Route::resource('gpus', GpuController::class);
     Route::resource('processors', ProcessorController::class);
     Route::resource('juegos', JuegoController::class);
     Route::resource('configuracion', ConfiguracionController::class);
     Route::resource('benchmark', BenchmarkController::class);
-    Route::get('/benchmarks', [JuegoBenchmarkController::class, 'index'])->name('benchmarks.index');
-    Route::get('/benchmarks/{id}', [JuegoBenchmarkController::class, 'show'])->name('benchmarks.show');
+
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+    Route::get('/admin/settings', [SettingsController::class, 'index'])->name('admin.settings');
 });

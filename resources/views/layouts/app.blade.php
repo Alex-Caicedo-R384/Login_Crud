@@ -6,7 +6,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'WEAS') }}</title>
+    <title>@yield('title', 'MI CORE')</title>
 
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -24,7 +24,10 @@
         'resources/css/create-cpu-gpu.css',
         'resources/css/header.css',
         'resources/css/benchmarks.css',
+        'resources/css/processors.css',
         'resources/css/tabla.css',
+        'resources/css/juegos.css',
+        'resources/css/configuraciones.css',
         'resources/css/modal.css'
     ]) <!-- Incluir aquí más css-->
 </head>
@@ -33,9 +36,10 @@
     <div id="app">
             <header class="navbar">
                 <div class="container">
-                    <span class="navbar-brand" href="{{ route('home') }}">
-                        {{ config('app.name', 'WEAS') }}
-                    </span>
+                <span class="navbar-brand" href="{{ route('home') }}">
+                    {{ config('title', 'MI CORE') }}
+                </span>
+
 
                     <nav class="navbar-links">
                         <ul class="nav-menu">
