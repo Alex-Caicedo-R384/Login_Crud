@@ -10,6 +10,7 @@ use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\BenchmarkController;
 use App\Http\Controllers\JuegoBenchmarkController;
 use App\Http\Middleware\CheckAdmin;
+use App\Http\Controllers\AjusteRecomendadoController;
 
 
 Route::get('/', function () {
@@ -32,6 +33,7 @@ Route::middleware(['auth', CheckAdmin::class])->group(function () {
     Route::resource('processors', ProcessorController::class);
     Route::resource('juegos', JuegoController::class);
     Route::resource('configuracion', ConfiguracionController::class);
+    Route::resource('ajustes', AjusteRecomendadoController::class);
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');

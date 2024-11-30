@@ -1,38 +1,99 @@
+/* Contenedor principal */
 .container {
-    max-width: 700px;
-    margin: auto;
+    max-width: 600px;
+    margin: 50px auto; /* Centrar vertical y horizontalmente */
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
+
+/* Título */
+.container h2 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Grupos de formularios */
 .form-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px; /* Ajusta este valor según tus necesidades */
+    margin-bottom: 15px;
 }
 
+/* Etiquetas de los campos */
 .form-label {
-    width: 150px; /* Ajusta este valor según el espacio que necesites */
-    margin-right: 5px; /* Reduce este valor para disminuir la separación */
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
 }
 
+/* Campos de entrada */
 .form-input {
-    flex: 1;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
 }
 
+/* Campo en estado de error */
+.form-input.is-invalid {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+}
 
+/* Mensaje de error */
 .invalid-feedback {
-    color: red;
+    color: #dc3545;
     font-size: 12px;
+    margin-top: 5px;
 }
 
+/* Botón de registro */
 .submit-btn {
+    width: 100%;
     background-color: #326fb1;
-    color: #000;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
     background-color: #1a3e64;
-    color: #fff; /* Cambia el color del texto al blanco */
+}
+
+/* Pequeñas animaciones */
+.form-input:focus {
+    border-color: #326fb1;
+    outline: none;
+    box-shadow: 0 0 3px rgba(50, 111, 177, 0.5);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .form-label {
+        font-size: 13px;
+    }
+
+    .form-input {
+        font-size: 13px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
 }

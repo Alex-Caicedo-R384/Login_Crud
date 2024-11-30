@@ -21,4 +21,9 @@ class Juego extends Model
         return $this->hasMany(Benchmark::class);
     }
 
+    public function ajustesRecomendados()
+    {
+        return $this->hasOne(AjusteRecomendado::class, 'categoria', 'categoria');
+    }
+
 }

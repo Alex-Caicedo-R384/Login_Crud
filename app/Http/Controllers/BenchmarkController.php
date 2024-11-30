@@ -15,9 +15,13 @@ class BenchmarkController extends Controller
 {
     public function index()
     {
-        $benchmarks = Benchmark::with(['configuracion', 'gpu', 'processor', 'juego'])->get();
+        $benchmarks = Benchmark::with(['configuracion', 'gpu', 'processor', 'juego'])
+            ->where('user_id', Auth::id())
+            ->get();
+    
         return view('benchmark.index', compact('benchmarks'));
     }
+    
 
     public function create()
     {

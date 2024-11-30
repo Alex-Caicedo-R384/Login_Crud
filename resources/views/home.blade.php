@@ -28,6 +28,7 @@
                     <a href="{{ route('processors.index') }}" class="dashboard-action-btn"><i class="fas fa-microchip"></i> {{ __('CPU') }}</a>
                     <a href="{{ route('juegos.index') }}" class="dashboard-action-btn"><i class="fas fa-gamepad"></i> {{ __('Juegos') }}</a>
                     <a href="{{ route('configuracion.index') }}" class="dashboard-action-btn"><i class="fas fa-cogs"></i> {{ __('Configuración') }}</a>
+                    <a href="{{ route('ajustes.index') }}" class="dashboard-action-btn"><i class="fas fa-cogs"></i> {{ __('Ajustes Recomendados') }}</a>
                 </div>
             @else
                 <div class="dashboard-action-card user-card">

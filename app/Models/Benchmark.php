@@ -19,7 +19,7 @@ class Benchmark extends Model
         'cpu_usage',
         'gpu_usage',
         'categoria',
-        'user_id', // Añadir user_id a los atributos rellenables
+        'user_id',
     ];
 
     public function configuracion()
