@@ -18,28 +18,32 @@ class Benchmark extends Model
         'min_fps',
         'cpu_usage',
         'gpu_usage',
-        'categoria'
-    ];  
-    
+        'categoria',
+        'user_id', // Añadir user_id a los atributos rellenables
+    ];
+
     public function configuracion()
     {
         return $this->belongsTo(Configuracion::class);
     }
-    
+
     public function juego()
     {
         return $this->belongsTo(Juego::class);
     }
-    
+
     public function gpu()
     {
         return $this->belongsTo(Gpu::class);
     }
-    
+
     public function processor()
     {
         return $this->belongsTo(Processor::class, 'cpu_id');
     }
-    
-}
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id'); // Relación con el modelo User
+    }
+}

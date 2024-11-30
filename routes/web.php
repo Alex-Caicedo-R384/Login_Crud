@@ -23,6 +23,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
     Route::get('/benchmarks', [JuegoBenchmarkController::class, 'index'])->name('benchmarks.index');
     Route::get('/benchmarks/{id}', [JuegoBenchmarkController::class, 'show'])->name('benchmarks.show');
+    Route::resource('benchmark', BenchmarkController::class);
 });
 
 Route::middleware(['auth', CheckAdmin::class])->group(function () {
@@ -31,7 +32,6 @@ Route::middleware(['auth', CheckAdmin::class])->group(function () {
     Route::resource('processors', ProcessorController::class);
     Route::resource('juegos', JuegoController::class);
     Route::resource('configuracion', ConfiguracionController::class);
-    Route::resource('benchmark', BenchmarkController::class);
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');

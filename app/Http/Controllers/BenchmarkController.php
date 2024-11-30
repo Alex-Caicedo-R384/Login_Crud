@@ -8,6 +8,7 @@ use App\Models\Configuracion;
 use App\Models\Gpu;
 use App\Models\Processor;
 use App\Models\Juego;
+use Illuminate\Support\Facades\Auth;
 
 
 class BenchmarkController extends Controller
@@ -40,9 +41,9 @@ class BenchmarkController extends Controller
             'cpu_usage' => 'required|numeric',
             'gpu_usage' => 'required|numeric',
         ]);
-    
+
         $juego = Juego::findOrFail($request->juego_id);
-    
+
         Benchmark::create([
             'juego_id' => $request->juego_id,
             'configuracion_id' => $request->configuracion_id,
@@ -53,21 +54,24 @@ class BenchmarkController extends Controller
             'cpu_usage' => $request->cpu_usage,
             'gpu_usage' => $request->gpu_usage,
             'categoria' => $juego->categoria,
+            'user_id' => Auth::id(),
         ]);
-    
+
         return redirect()->route('benchmark.index');
     }
-    
+        
 
     public function edit($id)
     {
-        $benchmark = Benchmark::findOrFail($id);
-
+        $benchmark = Benchmark::where('id', $id)
+            ->where('user_id', Auth::id()) // Verificar propietario
+            ->firstOrFail();
+    
         $configuraciones = Configuracion::all();
         $gpus = Gpu::all();
-        $processors = processor::all();
+        $processors = Processor::all();
         $juegos = Juego::all();
-
+    
         return view('benchmark.edit', compact('benchmark', 'configuraciones', 'gpus', 'processors', 'juegos'));
     }
 
@@ -83,18 +87,24 @@ class BenchmarkController extends Controller
             'cpu_usage' => 'required|numeric',
             'gpu_usage' => 'required|numeric',
         ]);
-
-        $benchmark = Benchmark::findOrFail($id);
+    
+        $benchmark = Benchmark::where('id', $id)
+            ->where('user_id', Auth::id()) // Verificar propietario
+            ->firstOrFail();
+    
         $benchmark->update($request->all());
-
+    
         return redirect()->route('benchmark.index');
     }
 
     public function destroy($id)
     {
-        $benchmark = Benchmark::findOrFail($id);
+        $benchmark = Benchmark::where('id', $id)
+            ->where('user_id', Auth::id()) // Verificar propietario
+            ->firstOrFail();
+    
         $benchmark->delete();
-
+    
         return redirect()->route('benchmark.index');
     }
 }
