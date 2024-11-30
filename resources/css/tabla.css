@@ -1,15 +1,15 @@
 /* Estilos generales para la tabla */
 .comparativa-table {
     width: 100%;
-    max-width: 1000px; /* Ampliar el ancho máximo */
+    max-width: 1000px; /* Ancho máximo */
     border-collapse: collapse;
     margin: 20px auto; /* Centrado de la tabla */
     font-size: 1rem;
     text-align: center;
-    background-color: #ffffff; /* Fondo blanco para la tabla */
-    border-radius: 8px; /* Bordes redondeados */
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 12px; /* Bordes redondeados */
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Sombra para destacar */
 }
 
 /* Estilo de celdas */
@@ -20,7 +20,7 @@
 }
 
 .comparativa-table th {
-    background-color: #007bff; /* Color de fondo azul */
+    background-color: #d4006a; /* Color principal */
     color: #ffffff; /* Texto blanco */
     text-transform: uppercase;
     font-weight: bold;
@@ -28,44 +28,73 @@
 
 /* Estilos para las filas */
 .comparativa-table tr:nth-child(even) {
-    background-color: #f8f9fa; /* Color de fondo gris claro */
+    background-color: #f8f9fa; /* Fondo gris claro para filas pares */
 }
 
 .comparativa-table tr:hover {
-    background-color: #f1f1f1; /* Fondo más claro al pasar el ratón */
+    background-color: #ffe0ec; /* Fondo rosa claro al pasar el ratón */
+    cursor: pointer; /* Cambiar el cursor */
 }
 
 /* Fila seleccionada */
 .selected-row {
-    background-color: #fff3cd; /* Fondo amarillo claro */
-    color: #856404; /* Texto marrón oscuro */
+    background-color: #ffd700; /* Fondo amarillo dorado */
+    color: #333; /* Texto oscuro */
     font-weight: bold;
-    border-left: 4px solid #ffc107; /* Borde izquierdo amarillo */
+    border-left: 4px solid #ffa500; /* Borde izquierdo naranja */
 }
 
-/* Estilo de las gráficas */
+/* Estilo para celdas de las gráficas */
 .gpu-brand.gpu-amd {
-    color: #e53935; /* Rojo para AMD */
+    color: #e53935; /* Rojo AMD */
     font-weight: bold;
 }
 
 .gpu-brand.gpu-nvidia {
-    color: #29d726; /* Azul para NVIDIA */
+    color: #29d726; /* Verde NVIDIA */
     font-weight: bold;
 }
 
+.gpu-brand {
+    text-transform: capitalize; /* Capitalizar nombres */
+}
+
+/* Título de la tabla */
 .comparativa-title {
-    color: #d4006a; /* Color vibrante para el título */
-    padding: 10px 20px; /* Espaciado adicional */
+    color: #d4006a; /* Color principal */
+    padding: 15px;
     border-radius: 8px;
-    font-size: 1.5rem; /* Tamaño de texto mayor */
+    font-size: 1.8rem;
     font-weight: bold;
     text-align: center;
-    background-color: #e9ecef; /* Fondo claro para destacar el título */
-    margin-bottom: 20px; /* Separación de la tabla */
+    background-color: #f9f9f9; /* Fondo claro */
+    margin-bottom: 20px; /* Espaciado inferior */
 }
 
-.comparativa-table .gpu-brand {
-    font-weight: bold;
-    text-transform: capitalize; /* Capitalizar los nombres de las marcas */
+/* Estilo para encabezados de columnas */
+.comparativa-table th {
+    border-bottom: 2px solid #fff; /* Línea clara entre encabezados */
+    font-size: 1rem;
 }
+
+/* Estilo de las celdas */
+.comparativa-table td {
+    color: #333; /* Texto oscuro */
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+/* Mejoras para celdas de diferencias */
+.fps-improvement,
+.cpu-usage-diff,
+.gpu-usage-diff {
+    font-weight: bold;
+    color: #007bff; /* Azul claro */
+}
+
+.fps-improvement.negative,
+.cpu-usage-diff.negative,
+.gpu-usage-diff.negative {
+    color: #e53935; /* Rojo para valores negativos */
+}
+

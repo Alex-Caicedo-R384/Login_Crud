@@ -5,71 +5,85 @@
     <h1 class="text-center mb-4">Explorar Juegos</h1>
 
     <!-- Seleccionar GPU -->
-    <section class="container">
+    <section class="select-gpu-section">
         <h2>Seleccionar GPU</h2>
         <form action="{{ route('benchmarks.index') }}" method="GET">
             <label for="gpu">Elige una GPU:</label>
-            <select name="gpu_id" id="gpu" class="form-control">
+            <select name="gpu_id" id="gpu">
+                <option value="">Mostrar todas las gráficas</option>
                 @foreach ($gpus as $gpu)
-                    <option value="{{ $gpu->id }}">{{ $gpu->name }}</option>
+                    <option value="{{ $gpu->id }}" {{ request('gpu_id') == $gpu->id ? 'selected' : '' }}>
+                        {{ $gpu->name }}
+                    </option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-primary mt-2">Filtrar</button>
+            <button type="submit">Filtrar</button>
         </form>
 
         @if (isset($benchmarks))
             @if ($benchmarks->isEmpty())
                 <p class="error-message">No se encontraron benchmarks para la GPU seleccionada.</p>
-            @else
             @endif
         @endif
     </section>
+
 
     <!-- Lista de Juegos -->
     <section class="row" id="juegos">
         @foreach ($groupedByCategory as $categoria => $benchmarksInCategory)
             <h2 class="category-title">{{ $categoria }}</h2>
 
-            @if ($categoria == 'Competitivo' || $categoria == 'Triple A' || $categoria == 'Peleas')
-                <div class="best-gpu-message">
-                    @if ($bestGpu && $categoria == $selectedBenchmark->juego->categoria)
-                        <p><strong>La mejor gráfica para esta categoría de juego ({{ $categoria }}) es:</strong> {{ $bestGpu->name }}.</p>
-                        <p><strong>FPS promedio:</strong> {{ $bestFps }} FPS.</p>
-                        <p><strong>Resolución recomendada:</strong> {{ $bestConfig ? $bestConfig->resolucion : 'No disponible' }}.</p>
-                        @if ($bestConfig && $bestConfig->rtx == 'Sí')
+            @php
+                $bestConfigData = $bestConfigsByCategory[$categoria] ?? null;
+            @endphp
+
+            <div class="best-gpu-message">
+                @if ($bestConfigData)
+                    <p class="fps-message">
+                        <strong>Validación de FPS:</strong> {{ $bestConfigData['message'] }}
+                    </p>
+                    @if ($bestConfigData['bestGpu'])
+                        <p><strong>La mejor gráfica para esta categoría:</strong> {{ $bestConfigData['bestGpu']->name }}.</p>
+                        <p><strong>FPS promedio:</strong> {{ $bestConfigData['bestFps'] }} FPS.</p>
+                        <p><strong>Resolución recomendada:</strong> {{ $bestConfigData['bestConfig'] ? $bestConfigData['bestConfig']->resolucion : 'No disponible' }}.</p>
+                        @if ($bestConfigData['bestConfig'] && $bestConfigData['bestConfig']->rtx == 'Sí')
                             <p><strong>La configuración cuenta con RTX.</strong></p>
                         @endif
                     @else
-                        <p>No se ha encontrado una configuración recomendada para esta categoría.</p>
+                        <p>No se encontró una configuración recomendada para esta categoría.</p>
                     @endif
-                </div>
-            @endif
+                @else
+                    <p>No se encontró información para esta categoría.</p>
+                @endif
+            </div>
 
-            @foreach ($benchmarksInCategory as $benchmark)
-                <article class="col-md-4 mb-4">
-                    <article class="card juego-card" style="cursor: pointer;">
-                        <form action="{{ route('benchmarks.index') }}" method="GET">
-                            @csrf
-                            <input type="hidden" name="benchmark_id" value="{{ $benchmark->id }}">
-                            <button type="submit" class="btn-card">
-                                <figure class="card-img-container">
-                                    <img src="{{ asset('images/' . $images[$benchmark->juego->id]) }}" class="card-img-top" alt="{{ $benchmark->juego->nombre }}">
-                                    <figcaption class="fps-badge">{{ $benchmark->avg_fps }} FPS</figcaption>
-                                </figure>
-                                <section class="card-body">
-                                    <h5 class="card-title text-center">{{ $benchmark->juego->nombre }}</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item"><strong>Gráfica:</strong> {{ $benchmark->gpu->name }}</li>
-                                        <li class="list-group-item"><strong>Resolución:</strong> {{ $benchmark->configuracion->resolucion }}</li>
-                                        <li class="list-group-item"><strong>Preset:</strong> {{ $benchmark->configuracion->preset }}</li>
-                                        <li class="list-group-item"><strong>RTX:</strong> {{ $benchmark->configuracion->rtx }}</li>
-                                    </ul>
-                                </section>
-                            </button>
-                        </form>
+            <section class="row">
+                @foreach ($benchmarksInCategory as $benchmark)
+                    <article class="col-md-4 mb-4">
+                        <article class="card juego-card" style="cursor: pointer;">
+                            <form action="{{ route('benchmarks.index') }}" method="GET">
+                                @csrf
+                                <input type="hidden" name="benchmark_id" value="{{ $benchmark->id }}">
+                                <button type="submit" class="btn-card">
+                                    <figure class="card-img-container">
+                                        <img src="{{ asset('images/' . $images[$benchmark->juego->id]) }}" class="card-img-top" alt="{{ $benchmark->juego->nombre }}">
+                                        <figcaption class="fps-badge">{{ $benchmark->avg_fps }} FPS</figcaption>
+                                    </figure>
+                                    <section class="card-body">
+                                        <h5 class="card-title text-center">{{ $benchmark->juego->nombre }}</h5>
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><strong>Gráfica:</strong> {{ $benchmark->gpu->name }}</li>
+                                            <li class="list-group-item"><strong>Resolución:</strong> {{ $benchmark->configuracion->resolucion }}</li>
+                                            <li class="list-group-item"><strong>Preset:</strong> {{ $benchmark->configuracion->preset }}</li>
+                                            <li class="list-group-item"><strong>RTX:</strong> {{ $benchmark->configuracion->rtx }}</li>
+                                        </ul>
+                                    </section>
+                                </button>
+                            </form>
+                        </article>
                     </article>
-                </article>
-            @endforeach
+                @endforeach
+            </section>
         @endforeach
     </section>
 

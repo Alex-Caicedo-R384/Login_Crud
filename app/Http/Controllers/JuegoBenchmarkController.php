@@ -12,63 +12,67 @@ class JuegoBenchmarkController extends Controller
     {
         $benchmarksQuery = Benchmark::with(['juego', 'configuracion', 'gpu'])
             ->orderByDesc('avg_fps');
-    
+
         if ($request->has('gpu_id') && $request->gpu_id != null) {
             $benchmarksQuery->where('gpu_id', $request->gpu_id);
         }
-    
+
         $benchmarks = $benchmarksQuery->get();
-    
+
         $groupedByCategory = $benchmarks->groupBy(function ($benchmark) {
             return $benchmark->juego->categoria;
         });
-    
+
         $images = $this->getGameImages();
         $gpus = Gpu::all();
-    
+
         $selectedBenchmark = null;
         $comparisonData = [];
         $bestGpu = null;
         $bestConfig = null;
         $bestFps = 0;
-    
+
+        $bestConfigsByCategory = [
+            'Competitivo' => $this->getBestGpuAndConfigCompetitivo($benchmarks),
+            'Triple A' => $this->getBestGpuAndConfigTripleA($benchmarks),
+            'Peleas' => $this->getBestGpuAndConfigPeleas($benchmarks),
+        ];
+
         if ($request->has('benchmark_id')) {
             $selectedBenchmark = Benchmark::with('juego', 'gpu', 'processor', 'configuracion')
                 ->findOrFail($request->benchmark_id);
-    
+
             $gameCategory = $selectedBenchmark->juego->categoria;
-    
-            if ($gameCategory == 'Competitivo') {
-                $bestGpuAndConfig = $this->getBestGpuAndConfigCompetitivo($benchmarks);
-            } elseif ($gameCategory == 'Triple A') {
-                $bestGpuAndConfig = $this->getBestGpuAndConfigTripleA($benchmarks);
-            } elseif ($gameCategory == 'Peleas') {
-                $bestGpuAndConfig = $this->getBestGpuAndConfigPeleas($benchmarks);
+
+            $bestGpuAndConfig = $bestConfigsByCategory[$gameCategory] ?? null;
+
+            if ($bestGpuAndConfig) {
+                $bestGpu = $bestGpuAndConfig['bestGpu'];
+                $bestConfig = $bestGpuAndConfig['bestConfig'];
+                $bestFps = $bestGpuAndConfig['bestFps'];
             }
-    
-            $bestGpu = $bestGpuAndConfig['bestGpu'];
-            $bestConfig = $bestGpuAndConfig['bestConfig'];
-            $bestFps = $bestGpuAndConfig['bestFps'];
-    
+
             $bestConfig = $selectedBenchmark->configuracion;
             $resolucion = $bestConfig ? $bestConfig->resolucion : 'No disponible';
             $preset = $bestConfig ? $bestConfig->preset : 'No disponible';
             $rtx = $bestConfig ? $bestConfig->rtx : 'No disponible';
-    
+
             $gpu_brand = $this->detectGpuBrand($selectedBenchmark->gpu->name);
             $cpu_brand = $this->detectCpuBrand($selectedBenchmark->processor->name);
-    
+
             $comparisonData = $this->generateComparisonData($benchmarks, $selectedBenchmark);
-    
+
             return view('benchmarks.index', compact(
                 'benchmarks', 'images', 'selectedBenchmark',
                 'gpu_brand', 'cpu_brand', 'resolucion',
                 'preset', 'rtx', 'bestConfig', 'bestGpu',
-                'bestFps', 'comparisonData', 'gpus', 'groupedByCategory'
+                'bestFps', 'comparisonData', 'gpus', 'groupedByCategory', 'bestConfigsByCategory'
             ));
         }
-    
-        return view('benchmarks.index', compact('benchmarks', 'images', 'gpus', 'groupedByCategory', 'bestGpu', 'bestConfig', 'bestFps'));
+
+        return view('benchmarks.index', compact(
+            'benchmarks', 'images', 'gpus', 'groupedByCategory', 'bestConfigsByCategory'
+        ));
     }
 
     private function getGameImages()
@@ -153,7 +157,7 @@ class JuegoBenchmarkController extends Controller
         });
 
         foreach ($filteredBenchmarks as $benchmark) {
-            if ($benchmark->avg_fps >= 140 && $benchmark->avg_fps <= 600) {
+            if ($benchmark->avg_fps >= 140 && $benchmark->avg_fps <= 240) {
                 if ($benchmark->configuracion->resolucion == $bestConfigResolution) {
                     if ($benchmark->avg_fps > $bestFps) {
                         $bestFps = $benchmark->avg_fps;
@@ -164,22 +168,13 @@ class JuegoBenchmarkController extends Controller
             }
         }
 
-        if (!$bestGpu) {
-            return [
-                'bestGpu' => null,
-                'bestConfig' => null,
-                'bestFps' => 0,
-                'message' => "No se ha encontrado una configuración recomendada para la categoría Competitivo."
-            ];
-        }
-
-        $message = "La mejor gráfica para esta categoría de juego es la {$bestGpu->name}, porque tiene {$bestFps} FPS en la resolución recomendada de {$bestConfigResolution}.";
+        $fpsMessage = $this->validateFpsRange($bestFps, 140, 240, 'Competitivo');
 
         return [
             'bestGpu' => $bestGpu,
             'bestConfig' => $bestConfig,
             'bestFps' => $bestFps,
-            'message' => $message
+            'message' => $fpsMessage,
         ];
     }
 
@@ -189,23 +184,14 @@ class JuegoBenchmarkController extends Controller
         $bestConfig = null;
         $bestFps = 0;
         $bestConfigResolution = '1440p';
-    
+
         $filteredBenchmarks = $benchmarks->filter(function ($benchmark) {
-            if ($benchmark->juego->categoria == 'Triple A') {
-                \Log::info('Benchmark categoría Triple A:', ['benchmark' => $benchmark]);
-                return true;
-            }
-            return false;
+            return $benchmark->juego->categoria == 'Triple A';
         });
-    
-        if ($filteredBenchmarks->isEmpty()) {
-            \Log::warning('No se encontraron benchmarks de la categoría Triple A.');
-        }
-    
+
         foreach ($filteredBenchmarks as $benchmark) {
-            if ($benchmark->avg_fps >= 60) {
-                if (($benchmark->configuracion->resolucion == '1440p') && 
-                    ($benchmark->configuracion->rtx == 'Sí' || $benchmark->avg_fps >= 100)) {
+            if ($benchmark->avg_fps > 70) {
+                if ($benchmark->configuracion->resolucion == $bestConfigResolution) {
                     if ($benchmark->avg_fps > $bestFps) {
                         $bestFps = $benchmark->avg_fps;
                         $bestGpu = $benchmark->gpu;
@@ -214,26 +200,16 @@ class JuegoBenchmarkController extends Controller
                 }
             }
         }
-    
-        if (!$bestGpu) {
-            return [
-                'bestGpu' => null,
-                'bestConfig' => null,
-                'bestFps' => 0,
-                'message' => "No se ha encontrado una configuración recomendada para la categoría Triple A."
-            ];
-        }
-    
-        $message = "La mejor gráfica para juegos de alta gama es la {$bestGpu->name}, alcanzando {$bestFps} FPS en la resolución de {$bestConfigResolution}.";
-    
+
+        $fpsMessage = $this->validateFpsRange($bestFps, 70, null, 'Triple A');
+
         return [
             'bestGpu' => $bestGpu,
             'bestConfig' => $bestConfig,
             'bestFps' => $bestFps,
-            'message' => $message
+            'message' => $fpsMessage,
         ];
     }
-    
 
     private function getBestGpuAndConfigPeleas($benchmarks)
     {
@@ -258,23 +234,31 @@ class JuegoBenchmarkController extends Controller
             }
         }
 
-        if (!$bestGpu) {
-            return [
-                'bestGpu' => null,
-                'bestConfig' => null,
-                'bestFps' => 0,
-                'message' => "No se ha encontrado una configuración recomendada para la categoría Peleas."
-            ];
-        }
-
-        $message = "La mejor gráfica para juegos de peleas es la {$bestGpu->name}, ofreciendo {$bestFps} FPS en la resolución recomendada de {$bestConfigResolution}.";
+        $fpsMessage = $this->validateFpsRange($bestFps, 60, 60, 'Peleas');
 
         return [
             'bestGpu' => $bestGpu,
             'bestConfig' => $bestConfig,
             'bestFps' => $bestFps,
-            'message' => $message
+            'message' => $fpsMessage,
         ];
+    }
+    
+    private function validateFpsRange($fps, $min, $max, $category)
+    {
+        if ($fps === 0) {
+            return "No se encontraron benchmarks para la categoría {$category}.";
+        }
+
+        if (!is_null($min) && $fps < $min) {
+            return "Los FPS promedio {$fps} están por debajo del mínimo esperado para la categoría {$category} ({$min} FPS).";
+        }
+
+        if (!is_null($max) && $fps > $max) {
+            return "Los FPS promedio {$fps} superan el máximo esperado para la categoría {$category} ({$max} FPS).";
+        }
+
+        return "Los FPS promedio {$fps} cumplen con los estándares esperados para la categoría {$category}.";
     }
     
 }

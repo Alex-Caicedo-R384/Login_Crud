@@ -102,21 +102,15 @@
     color: #d4006a;
     height: 60px;
     width: 50px;
-    font-size: 24px; /* Ícono más pequeño */
+    font-size: 30px; /* Ícono más pequeño */
     font-weight: bold;
     position: absolute;
-    top: 0px; /* Mueve el botón más hacia abajo */
-    right: 0px; /* Mueve el botón más hacia la izquierda */
+    top: 5px; /* Mueve el botón más hacia abajo */
+    right: 10px; /* Mueve el botón más hacia la izquierda */
     cursor: pointer;
     transition: all 0.3s ease; /* Transición para todos los cambios */
-    background: #fff;
+    background: #e9ecef;
     border-radius: 10px; /* Mantener redondeado */
-    border: 3px solid #d4006a; /* Borde por defecto */
-}
-
-/* Efecto hover */
-.close-btn:hover {
-    transform: scale(1.1); /* Hace que el botón se agrande ligeramente */
 }
 
 .close-btn:focus {

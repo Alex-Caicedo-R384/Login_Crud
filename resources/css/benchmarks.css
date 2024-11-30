@@ -146,3 +146,78 @@ button:focus {
     text-align: center;
     margin-bottom: 20px;
 }
+
+/* Estilos personalizados para la sección de selección de GPU */
+.select-gpu-section {
+    background-color: #fff; /* Fondo blanco para armonizar con .container */
+    padding: 20px;
+    border: 1px solid #d4006a; /* Borde del color principal */
+    border-radius: 30px; /* Bordes redondeados */
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Sombra para destacar */
+    text-align: center;
+}
+
+.select-gpu-section h2 {
+    font-size: 2rem;
+    color: #d4006a; /* Color principal */
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.select-gpu-section label {
+    display: block;
+    font-size: 1.2rem;
+    color: #333; /* Color neutro para el texto */
+    margin-bottom: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.select-gpu-section select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #d4006a; /* Borde del color principal */
+    border-radius: 15px; /* Bordes redondeados */
+    margin-bottom: 20px;
+    transition: border-color 0.3s, background-color 0.3s;
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra interior */
+}
+
+.select-gpu-section select:focus {
+    border-color: #2e2d2e; /* Borde más oscuro al enfocar */
+    background-color: #f9f9f9; /* Fondo más claro */
+    outline: none;
+}
+
+.select-gpu-section button {
+    display: inline-block;
+    background-color: #d4006a; /* Color principal */
+    color: #fff;
+    font-size: 1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px; /* Bordes redondeados consistentes con .card */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    font-weight: bold;
+}
+
+.select-gpu-section button:hover {
+    background-color: #2e2d2e; /* Fondo oscuro al pasar el mouse */
+    transform: scale(1.05); /* Efecto hover */
+}
+
+.select-gpu-section .error-message {
+    color: #d4006a; /* Rojo principal */
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 1rem;
+    text-align: center;
+}
