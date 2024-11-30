@@ -243,21 +243,17 @@ class JuegoBenchmarkController extends Controller
             'message' => $fpsMessage,
         ];
     }
-    
+
     private function validateFpsRange($fps, $min, $max, $category)
     {
-        if ($fps === 0) {
-            return "No se encontraron benchmarks para la categoría {$category}.";
-        }
-
         if (!is_null($min) && $fps < $min) {
             return "Los FPS promedio {$fps} están por debajo del mínimo esperado para la categoría {$category} ({$min} FPS).";
         }
-
-        if (!is_null($max) && $fps > $max) {
-            return "Los FPS promedio {$fps} superan el máximo esperado para la categoría {$category} ({$max} FPS).";
+    
+        if (!is_null($min) && !is_null($max) && $fps >= $min && $fps <= $max) {
+            return "Los FPS promedio {$fps} cumplen con los estándares esperados para la categoría {$category}. El rango esperado es entre {$min} y {$max} FPS.";
         }
-
+    
         return "Los FPS promedio {$fps} cumplen con los estándares esperados para la categoría {$category}.";
     }
     

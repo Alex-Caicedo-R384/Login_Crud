@@ -95,6 +95,6 @@
 .fps-improvement.negative,
 .cpu-usage-diff.negative,
 .gpu-usage-diff.negative {
-    color: #e53935; /* Rojo para valores negativos */
+    color: #e53935;
 }
 
